@@ -4,7 +4,7 @@ Imports System.Drawing
 Public Class Form1
     Inherits Form
 
-    ' Declare UI components
+    ' UI components
     Private lblHeader As Label
     Private txtCelsius As TextBox
     Private txtFahrenheit As TextBox
@@ -12,99 +12,109 @@ Public Class Form1
     Private btnClear As Button
 
     Public Sub New()
-        ' Set Window Title and Size
+        ' Window settings
         Me.Text = "Temperature Converter"
-        Me.Width = 350
-        Me.Height = 280
-        
-        ' Center the project on the screen
+        Me.Size = New Size(1000, 500)
         Me.StartPosition = FormStartPosition.CenterScreen
-        
-        InitializeComponents()
+
+        InitializeControls()
     End Sub
 
-    Private Sub InitializeComponents()
-        ' --- Header Label ---
+    Private Sub InitializeControls()
+
+        ' ----- Header -----
         lblHeader = New Label()
         lblHeader.Text = "Celsius to Fahrenheit Converter"
-        lblHeader.Font = New Font("Arial", 12, FontStyle.Bold)
-        lblHeader.Location = New Point(20, 10)
-        lblHeader.Size = New Size(300, 30)
+        lblHeader.Font = New Font("Arial", 16, FontStyle.Bold)
+        lblHeader.Dock = DockStyle.Top
+        lblHeader.Height = 60
         lblHeader.TextAlign = ContentAlignment.MiddleCenter
 
-        ' --- Celsius Input Section ---
-        Dim lblCelsius As New Label()
-        lblCelsius.Text = "Celsius:"
-        lblCelsius.Location = New Point(20, 60)
-        lblCelsius.AutoSize = True
-
+        ' ----- TextBoxes -----
         txtCelsius = New TextBox()
-        txtCelsius.Location = New Point(120, 58)
-        txtCelsius.Width = 150
-
-        ' --- Fahrenheit Input Section ---
-        Dim lblFahrenheit As New Label()
-        lblFahrenheit.Text = "Fahrenheit:"
-        lblFahrenheit.Location = New Point(20, 100)
-        lblFahrenheit.AutoSize = True
+        txtCelsius.Width = 350
 
         txtFahrenheit = New TextBox()
-        txtFahrenheit.Location = New Point(120, 98)
-        txtFahrenheit.Width = 150
-        ' Removed ReadOnly so users can enter Fahrenheit values too
-        txtFahrenheit.ReadOnly = False 
+        txtFahrenheit.Width = 350
 
-        ' --- Buttons ---
+        ' ----- Buttons -----
         btnConvert = New Button()
         btnConvert.Text = "Convert"
-        btnConvert.Location = New Point(50, 150)
-        ' Add event listener for the click event
+        btnConvert.Width = 150
+        btnConvert.Height = 60
         AddHandler btnConvert.Click, AddressOf ConvertTemperature
 
         btnClear = New Button()
         btnClear.Text = "Clear"
-        btnClear.Location = New Point(170, 150)
+        btnClear.Width = 100
+        btnClear.Height = 60
         AddHandler btnClear.Click, AddressOf ClearFields
 
-        ' Add all controls to the form
+        ' ----- Layout Panel -----
+        Dim layout As New TableLayoutPanel()
+        layout.Dock = DockStyle.Fill
+        layout.ColumnCount = 2
+        layout.RowCount = 3
+        layout.Padding = New Padding(80, 30, 80, 80)
+
+        layout.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 40))
+        layout.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 60))
+
+        layout.RowStyles.Add(New RowStyle(SizeType.Absolute, 40))
+        layout.RowStyles.Add(New RowStyle(SizeType.Absolute, 40))
+        layout.RowStyles.Add(New RowStyle(SizeType.Percent, 100))
+
+        layout.Controls.Add(New Label() With {.Text = "Celsius:", .Anchor = AnchorStyles.Right, .AutoSize = True}, 0, 0)
+        layout.Controls.Add(txtCelsius, 1, 0)
+
+        layout.Controls.Add(New Label() With {.Text = "Fahrenheit:", .Anchor = AnchorStyles.Right, .AutoSize = True}, 0, 1)
+        layout.Controls.Add(txtFahrenheit, 1, 1)
+
+        layout.Controls.Add(btnConvert, 0, 2)
+        layout.Controls.Add(btnClear, 1, 2)
+
+        btnConvert.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btnClear.Anchor = AnchorStyles.Top Or AnchorStyles.Left
+
+        ' ----- Add controls -----
+        Me.Controls.Add(layout)
         Me.Controls.Add(lblHeader)
-        Me.Controls.Add(lblCelsius)
-        Me.Controls.Add(txtCelsius)
-        Me.Controls.Add(lblFahrenheit)
-        Me.Controls.Add(txtFahrenheit)
-        Me.Controls.Add(btnConvert)
-        Me.Controls.Add(btnClear)
+
     End Sub
 
-    ' Main logic to handle two-way conversion
+    ' ----- Conversion Logic -----
     Private Sub ConvertTemperature(sender As Object, e As EventArgs)
-        ' Check if Celsius has a value to convert to Fahrenheit
+
+        ' Prevent both fields being filled
+        If Not String.IsNullOrWhiteSpace(txtCelsius.Text) AndAlso
+           Not String.IsNullOrWhiteSpace(txtFahrenheit.Text) Then
+            MessageBox.Show("Please clear one field before converting.", "Input Error")
+            Return
+        End If
+
         If Not String.IsNullOrWhiteSpace(txtCelsius.Text) Then
             Dim celsius As Double
             If Double.TryParse(txtCelsius.Text, celsius) Then
-                ' Formula: (C * 9/5) + 32
-                Dim fahrenheit As Double = (celsius * 9 / 5) + 32
-                txtFahrenheit.Text = fahrenheit.ToString("0.00")
+                txtFahrenheit.Text = ((celsius * 9 / 5) + 32).ToString("0.00")
             Else
-                MessageBox.Show("Please enter a valid number in Celsius.", "Input Error")
+                MessageBox.Show("Enter a valid Celsius value.", "Input Error")
             End If
 
-        ' If Celsius is empty, check if Fahrenheit has a value to convert to Celsius
         ElseIf Not String.IsNullOrWhiteSpace(txtFahrenheit.Text) Then
             Dim fahrenheit As Double
             If Double.TryParse(txtFahrenheit.Text, fahrenheit) Then
-                ' Formula: (F - 32) * 5/9
-                Dim celsius As Double = (fahrenheit - 32) * 5 / 9
-                txtCelsius.Text = celsius.ToString("0.00")
+                txtCelsius.Text = ((fahrenheit - 32) * 5 / 9).ToString("0.00")
             Else
-                MessageBox.Show("Please enter a valid number in Fahrenheit.", "Input Error")
+                MessageBox.Show("Enter a valid Fahrenheit value.", "Input Error")
             End If
+
         Else
-            MessageBox.Show("Please enter a value in one of the fields.", "Input Error")
+            MessageBox.Show("Please enter a value to convert.", "Input Error")
         End If
+
     End Sub
 
-    ' Reset all text fields
+    ' ----- Clear Fields -----
     Private Sub ClearFields(sender As Object, e As EventArgs)
         txtCelsius.Clear()
         txtFahrenheit.Clear()
