@@ -1,21 +1,21 @@
 # Build folders
-bin/
-obj/
+**/bin/
+**/obj/
 
 # Visual Studio
-.vs/
+**/.vs/
 *.user
 *.suo
 
 # Build results
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-[Bb]uild/
+**/[Dd]ebug/
+**/[Rr]elease/
+**/x64/
+**/x86/
+**/[Bb]uild/
 
 # Publish folders
-publish/
+**/publish/
 
 # Other
 *.exe
