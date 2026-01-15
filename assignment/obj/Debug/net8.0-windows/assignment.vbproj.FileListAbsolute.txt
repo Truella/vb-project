@@ -1,0 +1,15 @@
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\assignment.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\assignment.AssemblyInfoInputs.cache
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\assignment.AssemblyInfo.vb
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\assignment.vbproj.CoreCompileInputs.cache
+C:\Users\snart\Desktop\assignment\bin\Debug\net8.0-windows\assignment.exe
+C:\Users\snart\Desktop\assignment\bin\Debug\net8.0-windows\assignment.deps.json
+C:\Users\snart\Desktop\assignment\bin\Debug\net8.0-windows\assignment.runtimeconfig.json
+C:\Users\snart\Desktop\assignment\bin\Debug\net8.0-windows\assignment.dll
+C:\Users\snart\Desktop\assignment\bin\Debug\net8.0-windows\assignment.pdb
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\assignment.dll
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\refint\assignment.dll
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\assignment.pdb
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\assignment.genruntimeconfig.cache
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\ref\assignment.dll
+C:\Users\snart\Desktop\assignment\obj\Debug\net8.0-windows\assignment.sourcelink.json
